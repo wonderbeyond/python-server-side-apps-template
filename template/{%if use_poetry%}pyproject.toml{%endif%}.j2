@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "{{ app_name }}"
+version = "0.1.0"
+description = "{{ app_description }}"
+readme = "README.md"
+authors = ["{{ app_author_name }} <{{ app_author_email }}>"]
+
+[[tool.poetry.source]]
+name = "{{ default_pkg_source.0 }}"
+url = "{{ default_pkg_source.1 }}"
+default = true
+
+[tool.isort]
+multi_line_output = 3  # Vertical Hanging Indent
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+allow_subclassing_any = true
+allow_untyped_calls = true
+pretty = true
+show_error_codes = true
+implicit_reexport = true
+allow_untyped_decorators = true
+warn_unused_ignores = false
+warn_return_any = false
+namespace_packages = true
+{%- if use_sqlalchemy %}
+plugins = ["sqlalchemy.ext.mypy.plugin"]
+{%- endif %}
+
+[tool.poetry.dependencies]
+python = "^{{py_version}}"
+pytest = {version = "^7.1.2", optional = true}
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+flake8 = "^4.0.1"
+mypy = "^0.961"
+isort = "^5.10.1"
+
+[tool.poetry.extras]
+testing = ["pytest"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

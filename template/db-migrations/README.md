@@ -1,0 +1,1 @@
+# Keep versioned database migrations

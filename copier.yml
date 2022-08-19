@@ -1,0 +1,86 @@
+_templates_suffix: ".j2"
+_subdirectory: template
+
+app_name:
+  type: str
+  # validator: "{% if not app_name %}it's required{% endif %}"
+  help: "What is your application's brand name?"
+
+core_pkg_name:
+  type: str
+  # validator: "{% if not core_pkg_name %}it's required{% endif %}"
+  default: '{{- app_name|regex_replace("[\.\s\-]", "_")|lower() -}}'
+  help: "What is the core Python package name?"
+
+app_author_name:
+  type: str
+  # validator: "{% if not app_author_name %}it's required{% endif %}"
+  help: "The author name:"
+
+app_author_email:
+  type: str
+  # validator: "{% if not app_author_email %}it's required{% endif %}"
+  help: "The author email:"
+
+app_description:
+  type: str
+  help: "Your app description:"
+
+py_version:
+  type: str
+  default: "3.10"
+  help: "What is the Python version you want to use?"
+
+use_poetry:
+  type: bool
+  default: true
+  help: "Use Poetry to manage dependencies?"
+
+default_pkg_source:
+  type: yaml
+  default: ["pypi", "https://pypi.org/simple"]
+  choices:
+    "pypi.org": ["pypi", "https://pypi.org/simple"]
+    "清华大学开源软件镜像站": ["tsinghua", "https://pypi.tuna.tsinghua.edu.cn/simple"]
+    "南方科技大学开源镜像": ["sustech", "https://mirrors.sustech.edu.cn/pypi/simple"]
+    "北京外国语大学开源软件镜像站": ["bfsu", "https://mirrors.bfsu.edu.cn/pypi/web/simple/"]
+    "豆瓣": ["doubanio", "https://pypi.doubanio.com/simple"]
+    "网易": ["163", "https://mirrors.163.com/pypi/simple/"]
+    "阿里云": ["aliyun", "https://mirrors.aliyun.com/pypi/simple/"]
+    "腾讯云": ["tencent", "http://mirrors.cloud.tencent.com/pypi/simple/"]
+  help: "Select the default package source:"
+
+use_sqlalchemy:
+  type: bool
+  default: true
+  help: "Do you want to use SQLAlchemy?"
+
+use_redis_cache:
+  type: bool
+  default: false
+  help: "Do you want to use Redis cache backend?"
+
+use_fs_cache:
+  type: bool
+  default: false
+  help: "Do you want to use filesystem cache backend?"
+
+loading_config_from_fs:
+  type: bool
+  default: true
+  help: "Do you want your app to load config from filesystem?"
+
+config_filepath:
+  type: str
+  when: "{% if loading_config_from_fs %}true{% endif %}"
+  default: "~/.{{app_name}}.yaml"
+  help: "Where would your config file be located?"
+
+ci_engine:
+  type: str
+  default: "travis"
+  choices:
+    "GitLab CI/CD": "gitlab"
+    "GitHub Actions": "github"
+    "No, thanks!": ""
+  help: "Which CI engine will you use?"

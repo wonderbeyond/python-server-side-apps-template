@@ -1,0 +1,28 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.py]
+max_line_length = 119
+
+[*.{yaml,yml,json}]
+indent_size = 2
+
+[*.proto]
+indent_size = 2
+
+[.vscode/**.json]
+indent_size = 4
+
+# Makefiles always use tabs for indentation
+[Makefile]
+indent_style = tab
